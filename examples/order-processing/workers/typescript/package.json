@@ -1,0 +1,15 @@
+{
+  "name": "steppr-example-order-processing-ts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx main.ts"
+  },
+  "dependencies": {
+    "@steppr/sdk": "file:../../../../sdk/typescript"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}

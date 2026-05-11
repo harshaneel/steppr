@@ -1,0 +1,58 @@
+id: order-processing
+version: "1.0"
+start: validate_order
+
+# Workflow definitions are environment-agnostic: nodes are referenced by ID
+# only. Worker URLs are runtime configuration, supplied via --workers when
+# running the orchestrator. The orchestrator queries each worker's
+# /handlers endpoint to learn which node IDs it can serve.
+nodes:
+  - id: validate_order
+    type: enhancer
+    schema:
+      reads: [order_id, amount]
+      produces: [validated]
+    next_node: enrich_customer
+
+  - id: enrich_customer
+    type: enhancer
+    schema:
+      reads: [tier]
+      produces: [customer_tier, loyalty_points]
+    next_node: route_by_tier
+
+  # Filter is fully declarative: orchestrator evaluates conditions in-process.
+  - id: route_by_tier
+    type: filter
+    branches:
+      - label: premium
+        condition:
+          - eq:
+              - tier
+              - "premium"
+        next_node: apply_discount
+      - label: standard
+        condition:
+          - eq:
+              - tier
+              - "standard"
+        next_node: process_payment
+
+  - id: apply_discount
+    type: enhancer
+    schema:
+      reads: [amount]
+      produces: [discount, final_amount]
+    next_node: process_payment_premium
+
+  - id: process_payment_premium
+    type: action
+    schema:
+      reads: [order_id, final_amount]
+      produces: [payment_status, payment_amount]
+
+  - id: process_payment
+    type: action
+    schema:
+      reads: [order_id, amount]
+      produces: [payment_status, payment_amount]

@@ -1,0 +1,10 @@
+[project]
+name = "steppr"
+version = "0.1.0"
+description = "Python worker SDK for Steppr workflow orchestrator"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"

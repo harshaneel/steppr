@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steppr — Workflow Simulator</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <h1>Steppr <span class="tag">simulator</span></h1>
+        <p class="lede">Three node types. Build, edit, and run workflows in your browser.</p>
+      </div>
+      <div class="header-links">
+        <a href="https://github.com/harshaneel/steppr">GitHub ↗</a>
+      </div>
+    </header>
+
+    <section class="topbar">
+      <div class="picker">
+        <label for="example-select">Example</label>
+        <select id="example-select"></select>
+        <button id="reset-btn" class="btn btn-ghost" title="Reload selected example">↺ Reset</button>
+      </div>
+      <div class="actions">
+        <button id="add-node-btn" class="btn btn-secondary">+ Add node</button>
+        <button id="yaml-btn" class="btn btn-ghost">View YAML</button>
+        <button id="validate-btn" class="btn btn-secondary">Validate</button>
+        <button id="run-btn" class="btn btn-primary">▶ Run</button>
+      </div>
+    </section>
+    <p id="example-description" class="example-desc"></p>
+
+    <div class="workspace">
+      <main class="canvas-pane">
+        <div class="pane-header">
+          <h2>Workflow</h2>
+          <span class="muted">Click a node to edit · click <strong>+</strong> below a node to wire to another · click an edge to remove it</span>
+        </div>
+        <div class="canvas">
+          <svg id="graph-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot legend-enhancer"></span>Enhancer</span>
+          <span class="legend-item"><span class="legend-dot legend-filter"></span>Filter</span>
+          <span class="legend-item"><span class="legend-dot legend-action"></span>Action</span>
+        </div>
+      </main>
+
+      <aside class="sidepanel">
+        <section class="pane">
+          <h2>Initial input</h2>
+          <p class="hint">JSON payload your workflow starts with.</p>
+          <textarea id="payload-input" spellcheck="false"></textarea>
+        </section>
+
+        <section class="pane">
+          <h2>Result</h2>
+          <div id="result-summary" class="muted">Click <strong>Run</strong> to simulate.</div>
+          <div id="trace-output"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer>Open source under MIT. Same engine and validator as the Go reference orchestrator.</footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
